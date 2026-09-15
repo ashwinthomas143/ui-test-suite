@@ -1,0 +1,25 @@
+{
+  "name": "ui-test-suite",
+  "version": "1.0.0",
+  "description": "Real Playwright/TypeScript browser-automation test suite: E2E, network mocking, accessibility, and visual regression testing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:report": "playwright show-report",
+    "test:summarize": "node scripts/summarize-results.js"
+  },
+  "keywords": [],
+  "author": "Thomas Ashwin Varghese",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.125.0",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.1",
+    "typescript": "^7.0.2"
+  }
+}
