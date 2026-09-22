@@ -8,7 +8,14 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Windows, not Ubuntu — the visual-regression baseline
+    # (ui/visual.spec.ts-snapshots/) was captured on Windows, and
+    # Playwright's snapshot filenames are platform-suffixed
+    # (-win32/-linux/-darwin), so a Linux runner has no matching
+    # baseline to compare against. Matching the runner to the platform
+    # the baseline is actually valid for, rather than generating a
+    # second platform-specific baseline for a single-developer repo.
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -21,25 +28,7 @@ jobs:
 
       - run: npx tsc --noEmit
 
-      # Cache the downloaded browser binary itself, keyed on the
-      # Playwright version pinned in package-lock.json — a cache hit
-      # skips re-downloading Chromium on every run; --with-deps still
-      # runs to install OS-level libraries, which apt already caches.
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "version=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ steps.playwright-version.outputs.version }}
-
       - run: npx playwright install --with-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-
-      - run: npx playwright install-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       # Generates ui/features/*.feature into real Playwright spec files
       # (.features-gen/) — the BDD scenario is just generated source,
