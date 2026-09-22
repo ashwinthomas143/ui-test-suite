@@ -34,6 +34,7 @@ each named for exactly what they contain.
 | Accessibility | `accessibility.spec.ts` | Automated axe-core scan, WCAG 2 A/AA |
 | Visual regression | `visual.spec.ts` | Pixel-diff against a committed baseline |
 | Smoke | tests tagged `@smoke` | `npm run test:smoke` — fast subset |
+| BDD / Gherkin | `features/add-todo.feature` | One example scenario via playwright-bdd, reusing the existing Page Object |
 
 ## What's tested
 
@@ -62,6 +63,14 @@ each named for exactly what they contain.
   genuinely platform-sensitive — regenerate with
   `npx playwright test --update-snapshots` if it fails on a different
   OS/browser build than it was captured on.
+- `features/add-todo.feature` + `features/steps/add-todo.steps.ts` — one
+  Given/When/Then scenario via [`playwright-bdd`](https://vitalets.github.io/playwright-bdd/),
+  showing BDD-style specs on top of this suite rather than instead of
+  it: the step definitions reuse `todomvc.page.ts` through a fixture
+  (`features/fixtures.ts`) instead of re-deriving locators, so BDD and
+  the Page Object Model compose. This is one example demonstrating the
+  pattern, not a BDD rewrite of the suite — the rest of the suite stays
+  plain Playwright/TypeScript on purpose.
 
 ## How this was built
 
