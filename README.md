@@ -1,5 +1,8 @@
 # ui-test-suite
 
+[![CI](https://github.com/ashwinthomas143/ui-test-suite/actions/workflows/ci.yml/badge.svg)](https://github.com/ashwinthomas143/ui-test-suite/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A real Playwright/TypeScript **browser-automation** test suite — E2E
 functional testing, network mocking, automated accessibility scanning,
 and visual regression, all in one standalone repo. This is the UI
